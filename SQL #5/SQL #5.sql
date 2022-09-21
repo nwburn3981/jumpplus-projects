@@ -148,7 +148,11 @@ INNER JOIN
 StudentStipend ON StudentDetails.studId = StudentStipend.stuId;
 
 #Query 15. Write an SQL query for fetching records that are present in one table but not in another table using Minus.
-
+SELECT *
+FROM StudentDetails
+WHERE studId NOT IN (
+SELECT stuId 
+FROM StudentStipend);
 
 #Query 16. Write an SQL query to fetch count of students project-wise sorted by project’s count in descending order.
 SELECT  stuId, Project, Stipend, Count(Project) as project_members
