@@ -113,7 +113,7 @@ FROM StudentStipend
 WHERE Project ='P1'; 
 
 #Query 10. Write an SQL query for fetching duplicate records from a table.
-SELECT *
+SELECT *, COUNT(StuName) AS count
 FROM StudentDetails
 GROUP BY StuName
 HAVING COUNT(StuName) > 1;
@@ -196,7 +196,7 @@ Order BY Stipend DESC
 LIMIT 2;
 
 #Query 23. Write a query for fetching only the first name(string before space) from the Name column of StudentDetails table.
-SELECT substring_index( stuName, ' ', 1)
+SELECT substring_index( stuName, ' ', 1) AS fname
 FROM StudentDetails;
 
 #Query 24. Write an SQL query for fetching only odd rows from the table.
