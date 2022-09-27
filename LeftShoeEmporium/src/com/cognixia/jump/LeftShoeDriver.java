@@ -1,10 +1,16 @@
 package com.cognixia.jump;
 
+import java.util.Scanner;
+
+import com.cognixia.jump.UI.ConsoleUI;
+
 public class LeftShoeDriver {
 
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Scanner scan = new Scanner(System.in);
+		
+		ConsoleUI.mainMenu(scan);
 
 	}
 
