@@ -58,19 +58,19 @@ public class ShoeDAO {
 
 		return shoes;
 	}
-	
+
 	public Shoe findByShoeCode(String code) {
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM shoe WHERE shoe_code = ?";
-		
+
 		Shoe shoe = new Shoe();
-		
+
 		try {
 
 			prep = conn.prepareStatement(sql);
 			prep.setString(1, code);
-			
+
 			rs = prep.executeQuery();
 
 			while (rs.next()) {
@@ -78,7 +78,6 @@ public class ShoeDAO {
 					throw new RecordNotFoundException("No shoes found");
 				}
 
-				
 				shoe.setShoe_id(rs.getInt(1));
 				shoe.setBrand(rs.getString(2));
 				shoe.setShoe_name(rs.getString(3));
@@ -101,15 +100,14 @@ public class ShoeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return shoe;
 	}
 
 	public boolean updateStock(Shoe shoe) {
 		PreparedStatement prep = null;
 		int numInserts = 0;
-		String sql = "UPDATE shoe SET stock = ?, WHERE shoe_id = ?)";
+		String sql = "UPDATE shoe SET stock = ? WHERE shoe_id = ?";
 
 		try {
 			prep = conn.prepareStatement(sql);
@@ -132,6 +130,47 @@ public class ShoeDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public int findStock(Shoe shoe) {
+
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		String sql = "SELECT stock FROM shoe WHERE shoe_code = ?";
+
+		int currentStock = 0;
+
+		try {
+
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, shoe.getShoe_code());
+
+			rs = prep.executeQuery();
+
+			while (rs.next()) {
+				if (rs.getRow() == 0) {
+					throw new RecordNotFoundException("No shoes found");
+				}
+
+				currentStock = rs.getInt(1);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+
+		try {
+			prep.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return currentStock;
+
 	}
 
 }

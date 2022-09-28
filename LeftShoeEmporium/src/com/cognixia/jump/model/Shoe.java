@@ -13,16 +13,16 @@ public class Shoe implements Serializable {
 	private String shoe_type;
 	private String shoe_code;
 
-	private float price;
+	private double price;
 
 	private int stock;
 
 	public Shoe() {
-		this("N/A", "N/A", "N/A", "N/A", 0f, 0);
+		this("N/A", "N/A", "N/A", "N/A", 0, 0);
 		this.shoe_id = -1L;
 	}
 
-	public Shoe(String brand, String shoe_name, String shoe_type, String shoe_code, float price, int stock) {
+	public Shoe(String brand, String shoe_name, String shoe_type, String shoe_code, double price, int stock) {
 		super();
 		this.shoe_id = -1L;
 		this.brand = brand;
@@ -65,11 +65,11 @@ public class Shoe implements Serializable {
 		this.shoe_type = shoe_type;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

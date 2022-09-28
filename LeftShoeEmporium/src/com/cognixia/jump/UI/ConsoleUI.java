@@ -61,7 +61,7 @@ public class ConsoleUI {
 				System.out.println("\nPlease choose a menu option:");
 
 				System.out.println("\n1. Add Shoes" + "\n2. Remove Shoes" + "\n3. View Cart" + "\n4. View Order History"
-						+ "\n5. Checkout" + "\n6 Return an item " + "\n7. Logout");
+						+ "\n5. Checkout" + "\n6. Return an item " + "\n7. Logout");
 
 				int userChoice = scan.nextInt();
 				
@@ -85,6 +85,7 @@ public class ConsoleUI {
 					break;
 				case 5:
 					// Checkout confirmation
+					OrderUI.submitOrder(scan, id);
 					break;
 				case 6:
 					// Return an item before 15 days

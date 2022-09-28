@@ -14,14 +14,14 @@ public class Order implements Serializable {
 
 	private long user_id;
 
-	private float total;
+	private double total;
 
 	public Order() {
 		this(Date.valueOf(LocalDate.now()), -1L, 0f);
 		this.order_id = -1L;
 	}
 
-	public Order(Date order_date, long user_id, float total) {
+	public Order(Date order_date, long user_id, double total) {
 		super();
 		this.order_id = -1L;
 		this.order_date = order_date;
@@ -53,11 +53,11 @@ public class Order implements Serializable {
 		this.user_id = user_id;
 	}
 
-	public float getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 

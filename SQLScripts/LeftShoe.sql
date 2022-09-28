@@ -18,7 +18,7 @@ brand VARCHAR(50),
 shoe_name VARCHAR(75),
 shoe_type VARCHAR (75),
 shoe_code VARCHAR(5),
-price FLOAT,
+price DOUBLE,
 stock INT,
 PRIMARY KEY (shoe_id));
 
@@ -26,7 +26,7 @@ CREATE TABLE orders (
 order_id int NOT NULL AUTO_INCREMENT,
 order_date DATE,
 user_id int, 
-total FLOAT,
+total DOUBLE,
 PRIMARY KEY (order_id),
 FOREIGN KEY (user_id) REFERENCES users(user_id));
 
