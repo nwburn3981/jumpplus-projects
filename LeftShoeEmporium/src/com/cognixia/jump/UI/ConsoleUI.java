@@ -2,9 +2,14 @@ package com.cognixia.jump.UI;
 
 import java.util.Scanner;
 
+import com.cognixia.jump.dao.UserDAO;
+import com.cognixia.jump.model.User;
+
 public class ConsoleUI {
 
 	public static int id = 0;
+
+	public static UserDAO userDAO = new UserDAO();
 
 	public static void mainMenu(Scanner scan) {
 
@@ -13,13 +18,36 @@ public class ConsoleUI {
 		System.out.println("Welcome to Left Shoe Emporium");
 
 		while (exitStatus == false) {
+			
+			//clear up scanner
+			scan.next(); 
+			
 			if (id == 0) {
 
 				System.out.println("\nPlease login or register");
 
 				System.out.println("\n1. Register New User" + "\n2. Login" + "\n3. Exit");
-				
-				scan.next();
+
+				int userChoice = scan.nextInt();
+
+				switch (userChoice) {
+				case 1:
+					// Register User
+					break;
+				case 2:
+					id = login(scan);
+					if (id == 0) {
+						System.out.println("\nBad crednetials. Please Try again.");
+					}
+					break;
+				case 3:
+					System.out.println("Thanks for shopping Left Shoe!");
+					exitStatus = true;
+					break;
+				default:
+					System.out.println("Unexpected value: " + userChoice + "\nPlease choose an option by number.");
+					break;
+				}
 
 			} else {
 
@@ -27,11 +55,66 @@ public class ConsoleUI {
 
 				System.out.println("\n1. Add Shoes" + "\n2.Remove Shoes" + "\n3. View Cart" + "\n4. View Order History"
 						+ "\n5. Checkout" + "\n6. Logout");
-				
-				scan.next();
+
+				int userChoice = scan.nextInt();
+
+				switch (userChoice) {
+				case 1:
+					// Add Shoe view
+					break;
+				case 2:
+					// Remove shoe view
+					break;
+				case 3:
+					// View Cart
+					break;
+				case 4:
+					// View Order History
+					break;
+				case 5:
+					// Checkout confirmation
+					break;
+				case 6:
+					boolean confirmed = false;
+
+					while (!confirmed) {
+						System.out.println("Logout? You will lose any items in your cart (Y/N)");
+						String response = scan.next();
+
+						if (response.equalsIgnoreCase("y")) {
+							id = 0;
+							confirmed = true;
+							break;
+						} else if (response.equalsIgnoreCase("n")) {
+							confirmed = true;
+							break;
+						} else {
+							System.out.println("\nNot a valid input.");
+						}
+					}
+				default:
+					System.out.println("Unexpected value: " + userChoice + "\nPlease choose an option by number.");
+					break;
+				}
 			}
 
 		}
+	}
+
+	public static int login(Scanner scan) {
+
+		User user = new User();
+
+		System.out.println("\nPlease enter your username: ");
+
+		user.setUsername(scan.next());
+
+		System.out.println("\nPlease enter your password: ");
+
+		user.setPassword(scan.next());
+
+		return userDAO.verifyUser(user);
+
 	}
 
 }
