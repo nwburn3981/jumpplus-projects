@@ -9,6 +9,7 @@ username VARCHAR(50),
 password VARCHAR(30),
 first_name VARCHAR (40),
 last_name VARCHAR (40),
+email VARCHAR(100),
 PRIMARY KEY (user_id));
 
 CREATE TABLE shoe (
@@ -16,6 +17,7 @@ shoe_id int NOT NULL AUTO_INCREMENT,
 brand VARCHAR(50),
 shoe_name VARCHAR(75),
 shoe_type VARCHAR (75),
+shoe_code VARCHAR(5),
 price FLOAT,
 stock INT,
 PRIMARY KEY (shoe_id));
@@ -38,7 +40,8 @@ VALUES
 'testuser', 
 'pw123', 
 'Test', 
-'User');
+'User',
+'testuser@doop.com');
 
 INSERT INTO users  
 VALUES
@@ -46,7 +49,8 @@ VALUES
 'testuser2', 
 'password8', 
 'Johnny', 
-'Test');
+'Test',
+'testuser2@doop.com');
 
 INSERT INTO shoe  
 VALUES
@@ -54,6 +58,7 @@ VALUES
 'Noke', 
 'Alligator 5', 
 'Racing Boot', 
+'Nok1',
 25.97,
 25);
 
@@ -63,6 +68,7 @@ VALUES
 'Inverse', 
 'Teds Bed', 
 'Low-Rise Sneaker', 
+'Inv1',
 55.25,
 50);
 
@@ -72,6 +78,7 @@ VALUES
 'Mr. Martins', 
 'Milkmaid', 
 'Fancy?', 
+'Mar1',
 30.00,
 20);
 
@@ -81,6 +88,7 @@ VALUES
 'Ranago', 
 'Stepinator', 
 'BIG BOY BOOT', 
+'Ran1',
 45.33,
 35);
 
@@ -90,6 +98,7 @@ VALUES
 'Noke', 
 'Crocodile 8', 
 'Slip-on Track Shoe', 
+'Nok2',
 33.33,
 15);
 
@@ -99,6 +108,7 @@ VALUES
 'Inverse', 
 'Jebs Shed', 
 'Shoe', 
+'Inv2',
 15.29,
 27);
 
@@ -108,6 +118,7 @@ VALUES
 'Noke', 
 'Lizard 3', 
 'High-End Lounge Shoe', 
+'Nok3',
 153.25,
 10);
 
@@ -116,7 +127,8 @@ VALUES
 (NULL, 
 'Ranago', 
 'Right Shoe', 
-'Shoe (RIGHT SHOE EDITION)', 
+'BIG BOY BOOT (RIGHT SHOE EDITION)', 
+'Ran2',
 200.99,
 5);
 

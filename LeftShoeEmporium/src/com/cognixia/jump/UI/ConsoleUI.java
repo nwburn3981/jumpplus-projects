@@ -3,11 +3,16 @@ package com.cognixia.jump.UI;
 import java.util.Scanner;
 
 import com.cognixia.jump.dao.UserDAO;
+import com.cognixia.jump.model.Cart;
 import com.cognixia.jump.model.User;
+
+//TODO input validation, String formatting
 
 public class ConsoleUI {
 
 	public static int id = 0;
+	
+	public static Cart cart;
 
 	public static UserDAO userDAO = new UserDAO();
 
@@ -19,8 +24,7 @@ public class ConsoleUI {
 
 		while (exitStatus == false) {
 			
-			//clear up scanner
-			scan.next(); 
+			
 			
 			if (id == 0) {
 
@@ -33,12 +37,15 @@ public class ConsoleUI {
 				switch (userChoice) {
 				case 1:
 					// Register User
+					RegisterUI.registerUser(scan);
 					break;
 				case 2:
 					id = login(scan);
 					if (id == 0) {
-						System.out.println("\nBad crednetials. Please Try again.");
+						System.out.println("\nBad credentials. Please Try again.");
 					}
+					//Initiates new Cart whenever a user logs in
+					cart = new Cart();
 					break;
 				case 3:
 					System.out.println("Thanks for shopping Left Shoe!");
@@ -53,29 +60,40 @@ public class ConsoleUI {
 
 				System.out.println("\nPlease choose a menu option:");
 
-				System.out.println("\n1. Add Shoes" + "\n2.Remove Shoes" + "\n3. View Cart" + "\n4. View Order History"
-						+ "\n5. Checkout" + "\n6. Logout");
+				System.out.println("\n1. Add Shoes" + "\n2. Remove Shoes" + "\n3. View Cart" + "\n4. View Order History"
+						+ "\n5. Checkout" + "\n6 Return an item " + "\n7. Logout");
 
 				int userChoice = scan.nextInt();
+				
 
 				switch (userChoice) {
 				case 1:
 					// Add Shoe view
+					ShoeUI.addShoeView(scan);
 					break;
 				case 2:
 					// Remove shoe view
+					ShoeUI.removeShoeView(scan);
 					break;
 				case 3:
 					// View Cart
+					OrderUI.viewCart(scan);
 					break;
 				case 4:
 					// View Order History
+					OrderUI.viewOrders(scan, id);
 					break;
 				case 5:
 					// Checkout confirmation
 					break;
 				case 6:
+					// Return an item before 15 days
+					break;
+				case 7:
 					boolean confirmed = false;
+					
+					//clear up scanner
+					scan.nextLine(); 
 
 					while (!confirmed) {
 						System.out.println("Logout? You will lose any items in your cart (Y/N)");

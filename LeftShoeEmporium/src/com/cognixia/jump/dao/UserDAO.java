@@ -39,6 +39,7 @@ public class UserDAO {
 				user.setPassword(rs.getString(3));
 				user.setFirst_name(rs.getString(4));
 				user.setLast_name(rs.getString(5));
+				user.setEmail(rs.getString(6));
 
 				users.add(user);
 			}
@@ -64,7 +65,7 @@ public class UserDAO {
 
 		PreparedStatement prep = null;
 		int numInserts = 0;
-		String sql = "INSERT INTO users VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?)";
 
 		try {
 			prep = conn.prepareStatement(sql);
@@ -74,6 +75,7 @@ public class UserDAO {
 			prep.setString(3, user.getPassword());
 			prep.setString(4, user.getFirst_name());
 			prep.setString(5, user.getLast_name());
+			prep.setString(6, user.getEmail());
 
 			numInserts = prep.executeUpdate();
 
@@ -97,7 +99,7 @@ public class UserDAO {
 
 		PreparedStatement prep = null;
 		int numInserts = 0;
-		String sql = "UPDATE users SET username = ?, password = ?, first_name = ?, last_name = ?, WHERE user_id = ?)";
+		String sql = "UPDATE users SET username = ?, password = ?, first_name = ?, last_name = ?, email = ? WHERE user_id = ?)";
 
 		try {
 			prep = conn.prepareStatement(sql);
@@ -106,7 +108,8 @@ public class UserDAO {
 			prep.setString(2, user.getPassword());
 			prep.setString(3, user.getFirst_name());
 			prep.setString(4, user.getLast_name());
-			prep.setInt(5, (int) user.getUser_id());
+			prep.setString(5, user.getEmail());
+			prep.setInt(6, (int) user.getUser_id());
 
 			numInserts = prep.executeUpdate();
 

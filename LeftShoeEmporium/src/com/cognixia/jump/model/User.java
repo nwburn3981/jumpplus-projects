@@ -16,12 +16,14 @@ public class User implements Serializable {
 
 	private String last_name;
 
+	private String email; // Create Validation
+
 	public User() {
-		this("N/A", "N/A", "N/A", "N/A");
+		this("N/A", "N/A", "N/A", "N/A", "N/A");
 		this.user_id = -1L;
 	}
 
-	public User(String username, String password, String first_name, String last_name) {
+	public User(String username, String password, String first_name, String last_name, String email) {
 		super();
 		this.user_id = -1L;
 		this.username = username;
@@ -70,10 +72,18 @@ public class User implements Serializable {
 		this.last_name = last_name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "User [user_id=" + user_id + ", username=" + username + ", password=" + password + ", first_name="
-				+ first_name + ", last_name=" + last_name + "]";
+				+ first_name + ", last_name=" + last_name + ", email=" + email + "]";
 	}
 
 }

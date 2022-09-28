@@ -16,20 +16,17 @@ public class Order implements Serializable {
 
 	private float total;
 
-	private Cart cart;
-
 	public Order() {
-		this(Date.valueOf(LocalDate.now()), -1L, 0f, new Cart());
+		this(Date.valueOf(LocalDate.now()), -1L, 0f);
 		this.order_id = -1L;
 	}
 
-	public Order(Date order_date, long user_id, float total, Cart cart) {
+	public Order(Date order_date, long user_id, float total) {
 		super();
 		this.order_id = -1L;
 		this.order_date = order_date;
 		this.user_id = user_id;
 		this.total = total;
-		this.cart = cart;
 	}
 
 	public long getOrder_id() {
@@ -64,18 +61,10 @@ public class Order implements Serializable {
 		this.total = total;
 	}
 
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
 	@Override
 	public String toString() {
 		return "Order [order_id=" + order_id + ", order_date=" + order_date + ", user_id=" + user_id + ", total="
-				+ total + ", cart=" + cart + "]";
+				+ total + "]";
 	}
 
 }
