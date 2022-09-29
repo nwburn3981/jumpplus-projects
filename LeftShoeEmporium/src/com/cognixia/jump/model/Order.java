@@ -58,7 +58,8 @@ public class Order implements Serializable {
 	}
 
 	public double getTotal() {
-		return total;
+		total = Math.round(total * 100);
+		return total/100;
 	}
 
 	public void setTotal(double total) {
@@ -75,10 +76,10 @@ public class Order implements Serializable {
 
 		System.out.print("Customer Name: " + orderUser.getFirst_name() + " " + orderUser.getLast_name() + "       " + "Date: " + order.getOrder_date()
 		+ "\nInvoice No: " + order.getOrder_id()
-		+ "\n\t" + "        Item                Price            Stock     Item Code");
+		+ "\n\t" + "        Item            Price       Item Code");
 		
 		for (Shoe shoe : shoes) {
-			System.out.println("\n\t" + shoe);
+			System.out.println("\n\t" + shoe.invoiceString());
 		}
 		
 		System.out.println("\n\n\tTotal = $" + order.getTotal());

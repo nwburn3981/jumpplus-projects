@@ -66,7 +66,8 @@ public class Shoe implements Serializable {
 	}
 
 	public double getPrice() {
-		return price;
+		price = Math.round(price * 100);
+		return price/100;
 	}
 
 	public void setPrice(double price) {
@@ -87,6 +88,11 @@ public class Shoe implements Serializable {
 
 	public void setShoe_code(String shoe_code) {
 		this.shoe_code = shoe_code;
+	}
+	
+	public String invoiceString() {
+		return "-- " + brand + " " + shoe_name + "   " + "$" + price + "   " + "   " + "Code: "
+				+ shoe_code + " --";
 	}
 
 	@Override

@@ -264,7 +264,7 @@ public class OrderDAO {
 				shoe.setShoe_name(rs.getString(3));
 				shoe.setShoe_type(rs.getString(4));
 				shoe.setShoe_code(rs.getString(5));
-				shoe.setPrice(rs.getFloat(6));
+				shoe.setPrice(rs.getDouble(6));
 
 				shoes.add(shoe);
 			}
