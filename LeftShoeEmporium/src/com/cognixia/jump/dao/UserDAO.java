@@ -60,6 +60,51 @@ public class UserDAO {
 
 		return users;
 	}
+	
+	public User findUserById(int id) {
+		
+		User user = new User();
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM users WHERE user_id = ?";
+		
+		try {
+			prep = conn.prepareStatement(sql);
+			
+			prep.setInt(1, id);
+			rs = prep.executeQuery();
+			
+			while (rs.next()) {
+				if (rs.getRow() == 0) {
+					throw new RecordNotFoundException("No users found");
+				}
+				
+				user.setUser_id(rs.getInt(1));
+				user.setUsername(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setFirst_name(rs.getString(4));
+				user.setLast_name(rs.getString(5));
+				user.setEmail(rs.getString(6));
+
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			prep.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 
 	public boolean create(User user) {
 

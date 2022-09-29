@@ -18,7 +18,9 @@ public class ShoeUI {
 
 		boolean exitStatus = false;
 		while (!exitStatus) {
-			shoes.forEach(System.out::println);
+			for (Shoe shoe : shoes) {
+				System.out.println(shoe + "\n");
+			}
 
 			System.out.println("\nPlease select the shoe code of the item you wish to add to your cart: ");
 

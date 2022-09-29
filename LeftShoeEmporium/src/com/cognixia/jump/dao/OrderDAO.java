@@ -1,10 +1,12 @@
 package com.cognixia.jump.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.cognixia.jump.ConnectionManager.ConnectionManager;
@@ -118,6 +120,38 @@ public class OrderDAO {
 		return false;
 
 	}
+	public boolean removeRelationship(int orderID, int shoeID) {
+		
+		PreparedStatement prep = null;
+		String sql = "DELETE FROM orders_shoes WHERE order_id = ? AND shoe_id = ? LIMIT 1;";
+		
+		int numInserts = 0;
+		
+		try {
+			prep = conn.prepareStatement(sql);
+			
+			prep.setInt(1, orderID);
+			prep.setInt(2, shoeID);
+			
+			numInserts = prep.executeUpdate();
+			
+			if (numInserts > 0) {
+				System.out.println("\nSuccess");
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			prep.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+	}
 
 	// FINDBYUSERID
 	public ArrayList<Order> findOrdersByUser(int id) {
@@ -158,6 +192,47 @@ public class OrderDAO {
 
 		return orders;
 	}
+	public ArrayList<Order> findReturnEligible(int id) {
+		
+		ArrayList<Order> orders = new ArrayList<>();
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		
+		Date cutoffDate = Date.valueOf(LocalDate.now().minusDays(15));
+		
+		String sql = "SELECT * FROM orders WHERE user_id = ? AND order_date > ? ";
+		
+		try {
+			
+			prep = conn.prepareStatement(sql);
+			
+			prep.setInt(1, id);
+			prep.setDate(2, cutoffDate);
+			
+			rs = prep.executeQuery();
+			
+			while (rs.next()) {
+				if (rs.getRow() == 0) {
+					throw new RecordNotFoundException("No orders found");
+				}
+				
+				Order order = new Order();
+				order.setOrder_id(rs.getInt(1));
+				order.setOrder_date(rs.getDate(2));
+				order.setUser_id(rs.getInt(3));
+				order.setTotal(rs.getFloat(4));
+				
+				orders.add(order);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+		
+		return orders;
+	}
 
 	// Will find the Shoe information for each shoe on the specified order.
 	public ArrayList<Shoe> findShoesOnOrder(int id) {
@@ -166,7 +241,7 @@ public class OrderDAO {
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT brand, shoe_name, shoe_type, price FROM orders \r\n" + "JOIN orders_shoes \r\n"
+		String sql = "SELECT shoe.shoe_id, brand, shoe_name, shoe_type, shoe_code, price FROM orders \r\n" + "JOIN orders_shoes \r\n"
 				+ "ON orders.order_id = orders_shoes.order_id\r\n" + "JOIN shoe\r\n"
 				+ "ON orders_shoes.shoe_id = shoe.shoe_id\r\n" + "WHERE orders.order_id = ? ";
 
@@ -184,10 +259,12 @@ public class OrderDAO {
 				}
 
 				Shoe shoe = new Shoe();
-				shoe.setBrand(rs.getString(1));
-				shoe.setShoe_name(rs.getString(2));
-				shoe.setShoe_type(rs.getString(3));
-				shoe.setPrice(rs.getFloat(4));
+				shoe.setShoe_id(rs.getInt(1));
+				shoe.setBrand(rs.getString(2));
+				shoe.setShoe_name(rs.getString(3));
+				shoe.setShoe_type(rs.getString(4));
+				shoe.setShoe_code(rs.getString(5));
+				shoe.setPrice(rs.getFloat(6));
 
 				shoes.add(shoe);
 			}

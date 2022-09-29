@@ -148,6 +148,14 @@ VALUES
 (SELECT SUM(price) FROM shoe WHERE brand = "Ranago")
 );
 
+INSERT INTO orders  
+VALUES
+(NULL, 
+'2022-09-10', 
+2,
+(SELECT SUM(price) FROM shoe WHERE brand = "Ranago")
+);
+
 INSERT INTO orders_shoes  
 VALUES
 (1, 
@@ -161,4 +169,14 @@ VALUES
 INSERT INTO orders_shoes  
 VALUES
 (2, 
+8);
+
+INSERT INTO orders_shoes  
+VALUES
+(3, 
+4);
+
+INSERT INTO orders_shoes  
+VALUES
+(3, 
 8);

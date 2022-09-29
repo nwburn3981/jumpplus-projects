@@ -91,8 +91,8 @@ public class Shoe implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Shoe [shoe_id=" + shoe_id + ", brand=" + brand + ", shoe_name=" + shoe_name + ", shoe_type=" + shoe_type
-				+ ", shoe_code=" + shoe_code + ", price=" + price + ", stock=" + stock + "]";
+		return "-- " + brand + " " + shoe_name + "   " + "$" + price + "   " + "Stock: " + stock + "   " + "Code: "
+				+ shoe_code + " --";
 	}
 
 }

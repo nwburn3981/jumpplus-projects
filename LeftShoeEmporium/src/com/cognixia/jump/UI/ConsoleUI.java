@@ -89,6 +89,7 @@ public class ConsoleUI {
 					break;
 				case 6:
 					// Return an item before 15 days
+					OrderUI.returnOrder(scan, id);
 					break;
 				case 7:
 					boolean confirmed = false;

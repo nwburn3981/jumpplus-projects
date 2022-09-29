@@ -3,6 +3,10 @@ package com.cognixia.jump.model;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import com.cognixia.jump.dao.OrderDAO;
+import com.cognixia.jump.dao.UserDAO;
 
 public class Order implements Serializable {
 
@@ -59,6 +63,26 @@ public class Order implements Serializable {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	
+	public void generateInvoice(Order order) {
+		OrderDAO orderDAO = new OrderDAO();
+		UserDAO userDAO = new UserDAO();
+		
+		User orderUser = userDAO.findUserById((int) order.getUser_id());
+		
+		ArrayList<Shoe> shoes = orderDAO.findShoesOnOrder((int) order.getOrder_id());
+
+		System.out.print("Customer Name: " + orderUser.getFirst_name() + " " + orderUser.getLast_name() + "       " + "Date: " + order.getOrder_date()
+		+ "\nInvoice No: " + order.getOrder_id()
+		+ "\n\t" + "        Item                Price            Stock     Item Code");
+		
+		for (Shoe shoe : shoes) {
+			System.out.println("\n\t" + shoe);
+		}
+		
+		System.out.println("\n\n\tTotal = $" + order.getTotal());
+		
 	}
 
 	@Override
