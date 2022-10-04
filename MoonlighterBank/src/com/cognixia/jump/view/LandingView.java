@@ -2,13 +2,17 @@ package com.cognixia.jump.view;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.fusesource.jansi.AnsiConsole;
 
 import com.cognixia.jump.dao.AccountDAO;
+import com.cognixia.jump.dao.TransactionDAO;
 import com.cognixia.jump.dao.UserDAO;
 import com.cognixia.jump.model.Account;
+import com.cognixia.jump.model.Transaction;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.validation.Validation;
 
@@ -18,6 +22,7 @@ public class LandingView {
 
 	public static UserDAO userDAO = new UserDAO();
 	public static AccountDAO accountDAO = new AccountDAO();
+	public static TransactionDAO transDAO = new TransactionDAO();
 
 	public static void landingView(Scanner scan) {
 
@@ -56,6 +61,7 @@ public class LandingView {
 
 		User user = new User();
 		Account account = new Account();
+		Transaction trans = new Transaction();
 
 		while (!confirmed) {
 			System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
@@ -159,6 +165,10 @@ public class LandingView {
 				account.setUserId( (int) userDAO.getUserByName(user.getName()).getId());
 				accountDAO.createAccount(account);
 				confirmed = true;
+				
+				trans.setDescription("Initial deposit - " + balance);
+				trans.setInitialAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
+				trans.setEndAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 			}
 
 		}
