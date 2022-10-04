@@ -1,9 +1,17 @@
 package com.cognixia.jump;
 
+import java.util.Scanner;
+
+import com.cognixia.jump.view.LandingView;
+
 public class MoonlighterDriver {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
+
+		Scanner scan = new Scanner(System.in);
+		
+		LandingView.landingView(scan);
 
 	}
 

@@ -1,5 +1,7 @@
 package com.cognixia.jump.model;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -89,8 +91,14 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", city="
-				+ city + ", street=" + street + ", phoneNumber=" + phoneNumber + "]";
+		
+		System.out.println(ansi().fgBrightBlue());
+		return "User: " + name
+				+ "\nusername: " + username
+				+ "\npassword: " + password
+				+ "\ncity: " + city
+				+ "\nstreet: " + street
+				+ "\nphoneNumber: " + phoneNumber;
 	}
 
 }

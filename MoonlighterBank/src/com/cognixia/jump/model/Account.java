@@ -1,5 +1,7 @@
 package com.cognixia.jump.model;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,7 +23,7 @@ public class Account implements Serializable {
 	private int userId;
 
 	private Type accountType;
-	
+
 	public Account() {
 		this(0.0, Timestamp.valueOf(LocalDateTime.now()), 0, Type.CHECKING);
 		this.id = -1L;
@@ -68,18 +70,26 @@ public class Account implements Serializable {
 		this.userId = userId;
 	}
 
-	public Type getAccountType() {
-		return accountType;
+	public String getAccountType() {
+		return accountType.toString();
 	}
 
-	public void setAccountType(Type accountType) {
-		this.accountType = accountType;
+	public void setAccountType(String accountType) {
+
+		if (accountType.equals("CHECKING")) {
+			this.accountType = Type.CHECKING;
+		} else {
+			this.accountType = Type.SAVINGS;
+		}
+
 	}
 
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", balance=" + balance + ", created=" + created + ", userId=" + userId
-				+ ", accountType=" + accountType + "]";
+
+		System.out.println(ansi().fgBrightBlue());
+		return "Account: " + accountType + id + "\nBalance: " + balance + "\nOpened: " + created + "\nAccount Holder: "
+				+ userId;
 	}
 
 }
