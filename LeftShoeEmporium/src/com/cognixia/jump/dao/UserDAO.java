@@ -90,7 +90,6 @@ public class UserDAO {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
 			System.out.println(e);

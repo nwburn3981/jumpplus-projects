@@ -11,10 +11,12 @@ public class Validation {
 		String choice = scan.next();
 
 		while (!choice.matches(regex)) {
-			System.out.println(ansi().fgRed().a("Not a valid choice, please choose from menu options."));
+			System.out.println(ansi().fgRed().a("\nNot a valid choice, please choose from menu options."));
 			choice = scan.next();
 
 		}
+		
+		scan.nextLine();
 
 		return Integer.parseInt(choice);
 
@@ -30,11 +32,9 @@ public class Validation {
 		while (!validated) {
 			choice = scan.nextLine();
 			if (choice.length() < 8) {
-				System.out.println("Too short, password must be at least 8 characters.");
-				scan.nextLine();
+				System.out.println("\nToo short, password must be at least 8 characters. Please try again: ");
 			} else if (choice.matches("^[^0-9()]+$")) {
-				System.out.println("No digits, password must have at least 1 digit 0-9.");
-				scan.nextLine();
+				System.out.println("\nNo digits, password must have at least 1 digit 0-9. Please try again: ");
 			} else {
 				validated = true;
 			}
@@ -45,15 +45,14 @@ public class Validation {
 
 	public static String binaryValidation(Scanner scan, String regex) {
 
-		String choice = null;
+		String choice = scan.nextLine();
 
 		System.out.print(ansi().fgRed());
 
 		while (!choice.matches(regex)) {
-			choice = scan.nextLine();
 
 			System.out.println("Not valid choice.");
-			scan.nextLine();
+			choice = scan.nextLine();
 		}
 
 		return choice;

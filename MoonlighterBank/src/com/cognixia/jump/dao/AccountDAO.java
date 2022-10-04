@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import com.cognixia.jump.connection.ConnectionManager;
@@ -41,7 +41,7 @@ public class AccountDAO {
 				Account account = new Account();
 				account.setId(rs.getInt(1));
 				account.setBalance(rs.getDouble(2));
-				account.setCreated(rs.getTimestamp(3));
+				account.setCreated(LocalDateTime.parse(rs.getString(3)));
 				account.setAccountType(rs.getString(4));
 				account.setUserId(rs.getInt(5));
 
@@ -65,7 +65,7 @@ public class AccountDAO {
 
 	}
 
-	public Account findAccountByTimestamp(Timestamp stamp) {
+	public Account findAccountByTimestamp(LocalDateTime stamp) {
 
 		Account account = new Account();
 
@@ -78,7 +78,7 @@ public class AccountDAO {
 
 			prep = conn.prepareStatement(sql);
 
-			prep.setTimestamp(1, stamp);
+			prep.setString(1, stamp.toString());
 
 			rs = prep.executeQuery();
 
@@ -89,7 +89,7 @@ public class AccountDAO {
 
 				account.setId(rs.getInt(1));
 				account.setBalance(rs.getDouble(2));
-				account.setCreated(rs.getTimestamp(3));
+				account.setCreated(LocalDateTime.parse(rs.getString(3)));
 				account.setAccountType(rs.getString(4));
 				account.setUserId(rs.getInt(5));
 
@@ -122,7 +122,7 @@ public class AccountDAO {
 
 			prep.setNull(1, Types.INTEGER);
 			prep.setDouble(2, account.getBalance());
-			prep.setTimestamp(3, account.getCreated());
+			prep.setString(3, account.getCreated().toString());
 			prep.setString(4, account.getAccountType());
 			prep.setInt(5, account.getUserId());
 

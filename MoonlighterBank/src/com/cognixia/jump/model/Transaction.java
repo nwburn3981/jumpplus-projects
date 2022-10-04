@@ -15,14 +15,14 @@ public class Transaction implements Serializable {
 	private int initialAccountId;
 	private int endAccountId;
 
-	private Timestamp timestamp;
+	private LocalDateTime timestamp;
 	
 	public Transaction() {
-		this("N/A", 0, 0, Timestamp.valueOf(LocalDateTime.now()));
+		this("N/A", 0, 0, LocalDateTime.now());
 		this.id = -1L;
 	}
 
-	public Transaction(String description, int initialAccountId, int endAccountId, Timestamp timestamp) {
+	public Transaction(String description, int initialAccountId, int endAccountId, LocalDateTime timestamp) {
 		super();
 		this.id = -1L;
 		this.description = description;
@@ -63,11 +63,11 @@ public class Transaction implements Serializable {
 		this.endAccountId = endAccountId;
 	}
 
-	public Timestamp getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 

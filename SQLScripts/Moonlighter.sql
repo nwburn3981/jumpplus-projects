@@ -37,7 +37,7 @@ NULL,
 CREATE TABLE accounts (
 account_id INT NOT NULL AUTO_INCREMENT,
 balance DOUBLE,
-created TIMESTAMP,
+created VARCHAR(50),
 account_type VARCHAR(15),
 user_id INT,
 PRIMARY KEY (account_id),
@@ -84,7 +84,7 @@ transaction_id INT NOT NULL AUTO_INCREMENT,
 description VARCHAR(150),
 initial_account_id INT,
 end_account_id INT,
-created TIMESTAMP,
+created VARCHAR(50),
 PRIMARY KEY (transaction_id),
 FOREIGN KEY (initial_account_id) REFERENCES accounts(account_id),
 FOREIGN KEY (end_account_id) REFERENCES accounts(account_id)
@@ -95,7 +95,7 @@ VALUES (
 NULL,
 "Initial deposit - $5000",
 1,
-NULL,
+1,
 timestamp(now())
 );
 
@@ -104,7 +104,7 @@ VALUES (
 NULL,
 "Initial deposit - $10000",
 2,
-NULL,
+2,
 timestamp(now())
 );
 
@@ -113,7 +113,7 @@ VALUES (
 NULL,
 "Initial deposit - $200",
 3,
-NULL,
+3,
 timestamp(now())
 );
 
@@ -122,7 +122,7 @@ VALUES (
 NULL,
 "Initial deposit - $500",
 4,
-NULL,
+4,
 timestamp(now())
 );
 

@@ -2,8 +2,6 @@ package com.cognixia.jump.view;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.fusesource.jansi.AnsiConsole;
@@ -75,47 +73,37 @@ public class LandingView {
 			String name = scan.nextLine();
 			user.setName(name);
 
-			scan.nextLine();
-
-			System.out.println("Please enter your username: ");
+			System.out.println("\nPlease enter your username: ");
 
 			String username = scan.nextLine();
 			user.setUsername(username);
 
-			scan.nextLine();
 
-			System.out.println("Please enter your password: ");
+			System.out.println("\nPlease enter your password: ");
 
 			String password = Validation.passwordValidation(scan);
-			user.setName(password);
+			user.setPassword(password);
 
 			System.out.print(ansi().fgRgb(67, 144, 186));
 
-			scan.nextLine();
-
-			System.out.println("Please enter your city: ");
+			System.out.println("\nPlease enter your city: ");
 
 			String city = scan.nextLine();
 			user.setCity(city);
 
-			scan.nextLine();
-
-			System.out.println("Please enter your street address: ");
+			System.out.println("\nPlease enter your street address: ");
 
 			String street = scan.nextLine();
 			user.setStreet(street);
 
-			scan.nextLine();
-
-			System.out.println("Please enter your phone number: ");
+			System.out.println("\nPlease enter your phone number: ");
 
 			String number = scan.nextLine();
 			user.setPhoneNumber(number);
 
 			System.out.println(user);
-			System.out.println(ansi().fgRgb(67, 144, 186).a("Is this information correct? (Y/N)"));
+			System.out.println(ansi().fgRgb(67, 144, 186).a("\nIs this information correct? (Y/N)"));
 
-			scan.nextLine();
 			String answer = Validation.binaryValidation(scan, "^[YNyn]$");
 
 			System.out.print(ansi().fgRgb(67, 144, 186));
@@ -127,16 +115,12 @@ public class LandingView {
 
 		}
 
-		scan.nextLine();
-
 		confirmed = false;
 
 		while (!confirmed) {
-			System.out.println("Please choose an account type: (C)hecking or (S)avings");
+			System.out.println("\nPlease choose an account type: (C)hecking or (S)avings");
 
 			String choice = Validation.binaryValidation(scan, "^[CScs]$");
-
-			scan.nextLine();
 
 			if (choice.equalsIgnoreCase("c")) {
 				account.setAccountType("CHECKING");
@@ -144,31 +128,36 @@ public class LandingView {
 				account.setAccountType("SAVINGS");
 			}
 
-			System.out.println("Please enter an inital deposit:");
+			System.out.println("\nPlease enter an inital deposit:");
 
 			int balance = Validation.numberValidation(scan, "^[1-9][\\d]*$");
 
 			System.out.print(ansi().fgRgb(67, 144, 186));
 
-			scan.nextLine();
-
 			account.setBalance(balance);
+			
+			account.setUserId( (int) userDAO.getUserByName(user.getName()).getId());
 
 			System.out.println(account);
-			System.out.println(ansi().fgRgb(67, 144, 186).a("Is this information correct? (Y/N)"));
+			System.out.println(ansi().fgRgb(67, 144, 186).a("\nIs this information correct? (Y/N)"));
 
 			choice = Validation.binaryValidation(scan, "^[YNyn]$");
 
 			System.out.print(ansi().fgRgb(67, 144, 186));
 
 			if (choice.equalsIgnoreCase("y")) {
-				account.setUserId( (int) userDAO.getUserByName(user.getName()).getId());
+				
 				accountDAO.createAccount(account);
 				confirmed = true;
 				
 				trans.setDescription("Initial deposit - " + balance);
+				
+				Account test = accountDAO.findAccountByTimestamp(account.getCreated());
+				System.out.println(test);
 				trans.setInitialAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 				trans.setEndAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
+				
+				transDAO.createTransaction(trans);
 			}
 
 		}

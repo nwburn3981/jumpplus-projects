@@ -15,6 +15,7 @@ public class UserDAO {
 	private Connection conn = ConnectionManager.getConnection();
 
 	public User getUserByName(String name) {
+
 		User user = new User();
 
 		PreparedStatement prep = null;
@@ -32,15 +33,15 @@ public class UserDAO {
 				if (rs.getRow() == 0) {
 					throw new RecordNotFoundException("No users found");
 				}
-			}
 
-			user.setId(rs.getInt(1));
-			user.setName(rs.getString(2));
-			user.setUsername(rs.getString(3));
-			user.setPassword(rs.getString(4));
-			user.setCity(rs.getString(5));
-			user.setStreet(rs.getString(6));
-			user.setPhoneNumber(rs.getString(7));
+				user.setId(rs.getInt(1));
+				user.setName(rs.getString(2));
+				user.setUsername(rs.getString(3));
+				user.setPassword(rs.getString(4));
+				user.setCity(rs.getString(5));
+				user.setStreet(rs.getString(6));
+				user.setPhoneNumber(rs.getString(7));
+			}
 
 		} catch (RecordNotFoundException e) {
 			System.out.println(e);
@@ -140,8 +141,7 @@ public class UserDAO {
 	}
 
 	public boolean updateUser(User user) {
-		
-		
+
 		PreparedStatement prep = null;
 		int numInserts = 0;
 		String sql = "UPDATE users SET name = ? username = ?, password = ?, city = ?, street_address = ?, phone_number = ? WHERE user_id = ?)";
@@ -155,7 +155,7 @@ public class UserDAO {
 			prep.setString(4, user.getCity());
 			prep.setString(5, user.getStreet());
 			prep.setString(6, user.getPhoneNumber());
-			prep.setInt(7,  (int) user.getId());
+			prep.setInt(7, (int) user.getId());
 
 			numInserts = prep.executeUpdate();
 

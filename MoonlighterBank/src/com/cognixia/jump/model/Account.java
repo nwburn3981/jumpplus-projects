@@ -3,7 +3,7 @@ package com.cognixia.jump.model;
 import static org.fusesource.jansi.Ansi.ansi;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Account implements Serializable {
@@ -18,18 +18,18 @@ public class Account implements Serializable {
 
 	private double balance;
 
-	private Timestamp created;
+	private LocalDateTime created;
 
 	private int userId;
 
 	private Type accountType;
 
 	public Account() {
-		this(0.0, Timestamp.valueOf(LocalDateTime.now()), 0, Type.CHECKING);
+		this(0.0, LocalDateTime.now(), 0, Type.CHECKING);
 		this.id = -1L;
 	}
 
-	public Account(double balance, Timestamp created, int userId, Type accountType) {
+	public Account(double balance, LocalDateTime created, int userId, Type accountType) {
 		super();
 		this.id = -1L;
 		this.balance = balance;
@@ -54,11 +54,11 @@ public class Account implements Serializable {
 		this.balance = balance;
 	}
 
-	public Timestamp getCreated() {
+	public LocalDateTime getCreated() {
 		return created;
 	}
 
-	public void setCreated(Timestamp created) {
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 
