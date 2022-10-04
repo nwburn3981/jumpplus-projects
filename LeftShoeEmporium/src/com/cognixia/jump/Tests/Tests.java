@@ -68,6 +68,8 @@ public class Tests {
 		
 		System.out.println("\n\n\tTotal = $" + orders.get(0).getTotal());
 		
+	
+		
 
 	}
 
