@@ -27,9 +27,9 @@ public class MainMenuView {
 
 		boolean exitStatus = false;
 
-		System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
-		System.out.println("* Moonlighter's Bank *");
-		System.out.println("**********************");
+		System.out.println(ansi().eraseScreen().fgBlue().a("********************************"));
+		System.out.println("*      Moonlighter's Bank      *");
+		System.out.println("********************************");
 
 		System.out.println(ansi().fgRgb(67, 144, 186));
 
@@ -95,8 +95,9 @@ public class MainMenuView {
 		accounts = accountDAO.findAllAccountsByUser(userId);
 
 		for (Account account : accounts) {
-			System.out.println("\nId: " + account.getId());
+			System.out.println(ansi().fgMagenta().a("\nId: " + account.getId()));
 			System.out.println(account);
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		accountId = Validation.accountValidation(scan, accounts);
@@ -113,8 +114,8 @@ public class MainMenuView {
 
 		tran.setDescription("Deposit - $" + deposit);
 
-		tran.setInitialAccountId((int) accountDAO.findAccountByTimestamp(chosenAccount.getCreated()).getId());
-		tran.setEndAccountId((int) accountDAO.findAccountByTimestamp(chosenAccount.getCreated()).getId());
+		tran.setInitialAccountId(accountId);
+		tran.setEndAccountId(accountId);
 
 		tranDAO.createTransaction(tran);
 
@@ -136,8 +137,9 @@ public class MainMenuView {
 		accounts = accountDAO.findAllAccountsByUser(userId);
 
 		for (Account account : accounts) {
-			System.out.println("\nId: " + account.getId());
+			System.out.println(ansi().fgMagenta().a("\nId: " + account.getId()));
 			System.out.println(account);
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		accountId = Validation.accountValidation(scan, accounts);
@@ -150,8 +152,8 @@ public class MainMenuView {
 
 		tran.setDescription("Withdraw - $" + (balance - total));
 
-		tran.setInitialAccountId((int) accountDAO.findAccountByTimestamp(chosenAccount.getCreated()).getId());
-		tran.setEndAccountId((int) accountDAO.findAccountByTimestamp(chosenAccount.getCreated()).getId());
+		tran.setInitialAccountId(accountId);
+		tran.setEndAccountId(accountId);
 
 		tranDAO.createTransaction(tran);
 
@@ -178,8 +180,9 @@ public class MainMenuView {
 		accounts = accountDAO.findAllAccountsByUser(userId);
 
 		for (Account account : accounts) {
-			System.out.println("\nId: " + account.getId());
+			System.out.println(ansi().fgMagenta().a("\nId: " + account.getId()));
 			System.out.println(account);
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		initialAccountId = Validation.accountValidation(scan, accounts);
@@ -195,8 +198,9 @@ public class MainMenuView {
 		accounts = accountDAO.findAllAccounts();
 
 		for (Account account : accounts) {
-			System.out.println("\nId: " + account.getId());
+			System.out.println(ansi().fgMagenta().a("\nId: " + account.getId()));
 			System.out.println(account);
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		endpointAccountId = Validation.accountValidation(scan, accounts);
@@ -245,7 +249,7 @@ public class MainMenuView {
 
 			account.setUserId(userId);
 
-			System.out.println(account);
+			System.out.println("\n" + account);
 			System.out.println(ansi().fgRgb(67, 144, 186).a("\nIs this information correct? (Y/N)"));
 
 			choice = Validation.binaryValidation(scan, "^[YNyn]$");
@@ -257,7 +261,7 @@ public class MainMenuView {
 				accountDAO.createAccount(account);
 				confirmed = true;
 
-				tran.setDescription("Initial deposit - " + balance);
+				tran.setDescription("Initial deposit - $" + balance);
 
 				tran.setInitialAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 				tran.setEndAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
@@ -278,9 +282,9 @@ public class MainMenuView {
 
 		while (!confirmed) {
 			for (Transaction transaction : trans) {
-				System.out.println(transaction);
+				System.out.print("\n" + transaction);
 			}
-			System.out.println(ansi().fgRgb(67, 144, 186).a("\nPress any key to continue"));
+			System.out.println(ansi().fgBrightYellow().a("\nPress any key to continue"));
 			scan.nextLine();
 			confirmed = true;
 
@@ -304,7 +308,7 @@ public class MainMenuView {
 				System.out.println("\n" + account);
 			}
 
-			System.out.println(ansi().fgRgb(67, 144, 186).a("\nPress any key to continue"));
+			System.out.println(ansi().fgBrightYellow().a("\nPress any key to continue"));
 			scan.nextLine();
 			confirmed = true;
 

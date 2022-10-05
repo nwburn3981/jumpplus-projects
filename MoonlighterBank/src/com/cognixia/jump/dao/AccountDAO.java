@@ -1,5 +1,7 @@
 package com.cognixia.jump.dao;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import org.fusesource.jansi.Ansi;
 
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.exception.RecordNotFoundException;
@@ -49,7 +53,8 @@ public class AccountDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo accounts found"));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		try {
@@ -98,7 +103,8 @@ public class AccountDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo accounts found"));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		try {
@@ -145,7 +151,8 @@ public class AccountDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo accounts found."));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		try {
@@ -191,7 +198,8 @@ public class AccountDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo accounts found."));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 		try {
@@ -222,7 +230,8 @@ public class AccountDAO {
 			numInserts = prep.executeUpdate();
 
 			if (numInserts > 0) {
-				System.out.println("Account " + account.getAccountType() + account.getId() + " created.");
+				System.out.println(Ansi.ansi().fgBrightYellow().a("\nAccount created."));
+				System.out.print(ansi().fgRgb(67, 144, 186));
 				return true;
 			}
 		} catch (SQLException e) {
@@ -253,7 +262,8 @@ public class AccountDAO {
 			numInserts = prep.executeUpdate();
 
 			if (numInserts > 0) {
-				System.out.println("Balance: " + balance);
+				System.out.println(Ansi.ansi().fgBrightYellow().a("\nBalance: " + balance));
+				System.out.print(ansi().fgRgb(67, 144, 186));
 				return true;
 			}
 		} catch (SQLException e) {

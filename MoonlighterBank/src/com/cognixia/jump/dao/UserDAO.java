@@ -1,10 +1,14 @@
 package com.cognixia.jump.dao;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+
+import org.fusesource.jansi.Ansi;
 
 import com.cognixia.jump.exception.RecordNotFoundException;
 import com.cognixia.jump.connection.ConnectionManager;
@@ -44,7 +48,8 @@ public class UserDAO {
 			}
 
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo users found."));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -90,7 +95,8 @@ public class UserDAO {
 			}
 
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(Ansi.ansi().fgBrightYellow().a("\nNo users found."));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -156,7 +162,8 @@ public class UserDAO {
 			numInserts = prep.executeUpdate();
 
 			if (numInserts > 0) {
-				System.out.println("User " + user.getUsername() + " created.");
+				System.out.println(Ansi.ansi().fgBrightYellow().a("\nUser " + user.getUsername() + " created."));
+				System.out.print(ansi().fgRgb(67, 144, 186));
 				return true;
 			}
 		} catch (SQLException e) {
@@ -191,7 +198,8 @@ public class UserDAO {
 			numInserts = prep.executeUpdate();
 
 			if (numInserts > 0) {
-				System.out.println("User " + user.getUsername() + " updated.");
+				System.out.println(Ansi.ansi().fgBrightYellow().a("\nUser " + user.getUsername() + " updated."));
+				System.out.print(ansi().fgRgb(67, 144, 186));
 				return true;
 			}
 		} catch (SQLException e) {

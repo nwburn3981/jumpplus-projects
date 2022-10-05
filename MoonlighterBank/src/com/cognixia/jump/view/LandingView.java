@@ -29,9 +29,9 @@ public class LandingView {
 
 		boolean exitStatus = false;
 
-		System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
-		System.out.println("* Moonlighter's Bank *");
-		System.out.println("**********************");
+		System.out.println(ansi().eraseScreen().fgBlue().a("********************************"));
+		System.out.println("*      Moonlighter's Bank      *");
+		System.out.println("********************************");
 
 		System.out.println(ansi().fgRgb(67, 144, 186));
 
@@ -76,9 +76,9 @@ public class LandingView {
 		Transaction trans = new Transaction();
 
 		while (!confirmed) {
-			System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
-			System.out.println("*     New Account    *");
-			System.out.println("**********************");
+			System.out.println(ansi().eraseScreen().fgBlue().a("********************************"));
+			System.out.println("*      Create New Account      *");
+			System.out.println("********************************");
 
 			System.out.println(ansi().fgRgb(67, 144, 186));
 
@@ -131,6 +131,13 @@ public class LandingView {
 		confirmed = false;
 
 		while (!confirmed) {
+
+			System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
+			System.out.println("*     New Account    *");
+			System.out.println("**********************");
+
+			System.out.println(ansi().fgRgb(67, 144, 186));
+
 			System.out.println("\nPlease choose an account type: (C)hecking or (S)avings");
 
 			String choice = Validation.binaryValidation(scan, "^[CScs]$");
@@ -145,13 +152,11 @@ public class LandingView {
 
 			int balance = Validation.numberValidation(scan, "^[1-9][\\d]*$");
 
-			System.out.print(ansi().fgRgb(67, 144, 186));
-
 			account.setBalance(balance);
 
 			account.setUserId((int) userDAO.getUserByName(user.getName()).getId());
 
-			System.out.println(account);
+			System.out.println("\n" + account);
 			System.out.println(ansi().fgRgb(67, 144, 186).a("\nIs this information correct? (Y/N)"));
 
 			choice = Validation.binaryValidation(scan, "^[YNyn]$");
@@ -163,10 +168,8 @@ public class LandingView {
 				accountDAO.createAccount(account);
 				confirmed = true;
 
-				trans.setDescription("Initial deposit - " + balance);
+				trans.setDescription("Initial deposit - $" + balance);
 
-				Account test = accountDAO.findAccountByTimestamp(account.getCreated());
-				System.out.println(test);
 				trans.setInitialAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 				trans.setEndAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 
@@ -191,10 +194,11 @@ public class LandingView {
 			id = userDAO.verifyUser(username, password);
 
 			if (id == 0) {
-				throw new RecordNotFoundException("Wrong credentials");
+				throw new RecordNotFoundException("Bad credentials");
 			}
 		} catch (RecordNotFoundException e) {
-			System.out.println(e);
+			System.out.println(ansi().fgBrightYellow().a("Review your credentials or create new account."));
+			System.out.print(ansi().fgRgb(67, 144, 186));
 		}
 
 	}

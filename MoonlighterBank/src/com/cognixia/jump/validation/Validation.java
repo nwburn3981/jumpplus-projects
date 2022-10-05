@@ -20,6 +20,8 @@ public class Validation {
 		}
 
 		scan.nextLine();
+		
+		System.out.print(ansi().fgRgb(67, 144, 186));
 
 		return Integer.parseInt(choice);
 
@@ -51,6 +53,8 @@ public class Validation {
 			}
 
 		}
+		
+		System.out.print(ansi().fgRgb(67, 144, 186));
 
 		return Integer.parseInt(choice);
 
@@ -75,6 +79,8 @@ public class Validation {
 				validated = true;
 			}
 		}
+		
+		System.out.print(ansi().fgRgb(67, 144, 186));
 
 		return choice;
 	}
@@ -90,6 +96,8 @@ public class Validation {
 			System.out.println("Not valid choice.");
 			choice = scan.nextLine();
 		}
+		
+		System.out.print(ansi().fgRgb(67, 144, 186));
 
 		return choice;
 	}
@@ -114,6 +122,8 @@ public class Validation {
 				validated = true;
 			}
 		}
+		
+		System.out.print(ansi().fgRgb(67, 144, 186));
 		
 		return balance - Double.parseDouble(withdraw);
 	}

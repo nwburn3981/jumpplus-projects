@@ -46,7 +46,8 @@ public class Account implements Serializable {
 	}
 
 	public double getBalance() {
-		return balance;
+		balance = Math.round(balance * 100);
+		return balance/100;
 	}
 
 	public void setBalance(double balance) {
