@@ -3,7 +3,6 @@ package com.cognixia.jump.model;
 import static org.fusesource.jansi.Ansi.ansi;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Account implements Serializable {
@@ -87,8 +86,8 @@ public class Account implements Serializable {
 	@Override
 	public String toString() {
 
-		System.out.println(ansi().fgBrightBlue());
-		return "Account: " + accountType + id + "\nBalance: " + balance + "\nOpened: " + created + "\nAccount Holder: "
+		System.out.print(ansi().fgBrightBlue());
+		return "Account: " + accountType + "-" + id + "\nBalance: " + balance + "\nOpened: " + created + "\nAccount Holder: "
 				+ userId;
 	}
 

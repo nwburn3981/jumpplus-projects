@@ -1,7 +1,8 @@
 package com.cognixia.jump.model;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Transaction implements Serializable {
@@ -73,8 +74,11 @@ public class Transaction implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", description=" + description + ", initialAccountId=" + initialAccountId
-				+ ", endAccountId=" + endAccountId + ", timestamp=" + timestamp + "]";
+		
+		System.out.print(ansi().fgBrightBlue());
+		return "Transaction " + id
+				+ ": " + description + " from Account " + initialAccountId
+				+ " to Account " + endAccountId + " at " + timestamp;
 	}
 
 }

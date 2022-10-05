@@ -20,11 +20,11 @@ public class ValidationTests {
 			test = "No numbers";
 
 		}
-		
+
 		assertEquals("Passed", test);
 
 	}
-	
+
 	@Test
 	public void ValidationTest2() {
 
@@ -39,11 +39,11 @@ public class ValidationTests {
 			test = "No numbers";
 
 		}
-		
+
 		assertEquals("Too short", test);
 
 	}
-	
+
 	@Test
 	public void ValidationTest3() {
 
@@ -58,11 +58,11 @@ public class ValidationTests {
 			test = "No numbers";
 
 		}
-		
+
 		assertEquals("No numbers", test);
 
 	}
-	
+
 	@Test
 	public void ValidationTest4() {
 
@@ -79,20 +79,32 @@ public class ValidationTests {
 		}
 		
 		assertEquals("Passed", test);
+	}
+
+	@Test
+	public void ValidationTest5() {
+
+		String testString = "500";
+		double balance = 500;
+		double total;
+
+		total = balance + Double.parseDouble(testString);
+		
+		System.out.println(balance);
+		
+		System.out.println(Double.parseDouble(testString));
+		
+		System.out.println(total);
+
+		assertEquals(1000, total, 2);
 
 	}
-	
+
 	@Test
 	public void stringTest() {
-		
-		System.out.println("User: NAME HERE"
-				+ "\nusername: USERNAME"
-				+ "\npassword: PASSWORD"
-				+ "city: CITY"
-				+ "\nstreet: STREET"
-				+ "\nphoneNumber: NUMBER");
+
+		System.out.println("User: NAME HERE" + "\nusername: USERNAME" + "\npassword: PASSWORD" + "city: CITY"
+				+ "\nstreet: STREET" + "\nphoneNumber: NUMBER");
 	}
-	
-	
 
 }

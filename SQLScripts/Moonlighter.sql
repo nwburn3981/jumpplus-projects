@@ -47,7 +47,7 @@ INSERT INTO accounts
 VALUES (
 NULL,
 5000,
-timestamp(now()),
+"2022-10-04T13:32:01.6",
 "CHECKING",
 1
 );
@@ -56,7 +56,7 @@ INSERT INTO accounts
 VALUES (
 NULL,
 10000,
-timestamp(now()),
+"2022-10-04T13:32:01.671",
 "SAVINGS",
 1
 );
@@ -65,7 +65,7 @@ INSERT INTO accounts
 VALUES (
 NULL,
 200,
-timestamp(now()),
+"2022-10-04T13:32:01.671736",
 "CHECKING",
 2
 );
@@ -74,7 +74,7 @@ INSERT INTO accounts
 VALUES (
 NULL,
 500,
-timestamp(now()),
+"2022-10-04T13:32:01.135",
 "SAVINGS",
 2
 );
@@ -96,7 +96,7 @@ NULL,
 "Initial deposit - $5000",
 1,
 1,
-timestamp(now())
+"2022-10-04T13:32:01.555"
 );
 
 INSERT INTO transactions
@@ -105,7 +105,7 @@ NULL,
 "Initial deposit - $10000",
 2,
 2,
-timestamp(now())
+"2022-10-04T13:32:01.666"
 );
 
 INSERT INTO transactions
@@ -114,7 +114,7 @@ NULL,
 "Initial deposit - $200",
 3,
 3,
-timestamp(now())
+"2022-10-04T13:32:01.678"
 );
 
 INSERT INTO transactions
@@ -123,7 +123,7 @@ NULL,
 "Initial deposit - $500",
 4,
 4,
-timestamp(now())
+"2022-10-04T13:32:01.67155"
 );
 
 

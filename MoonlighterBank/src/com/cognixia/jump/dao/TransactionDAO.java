@@ -56,14 +56,17 @@ public class TransactionDAO {
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT * FROM transactions \r\n" + "WHERE initial_account_id OR end_account_id \r\n" + "IN \r\n"
-				+ "(SELECT account_id FROM accounts\r\n" + "WHERE user_id = ?);";
+		String sql = "SELECT * FROM transactions \r\n" + "WHERE initial_account_id \r\n"
+				+ "IN (SELECT account_id FROM accounts\r\n" + "WHERE user_id = ?)\r\n" + "OR end_account_id \r\n"
+				+ "IN \r\n" + "(SELECT account_id FROM accounts\r\n" + "WHERE user_id = ?)\r\n"
+				+ "ORDER BY created DESC LIMIT 5;";
 
 		try {
 
 			prep = conn.prepareStatement(sql);
 
 			prep.setInt(1, id);
+			prep.setInt(2, id);
 
 			rs = prep.executeQuery();
 
@@ -71,14 +74,17 @@ public class TransactionDAO {
 				if (rs.getRow() == 0) {
 					throw new RecordNotFoundException("No transactions found");
 				}
-			}
 
-			Transaction tran = new Transaction();
-			tran.setId(rs.getInt(1));
-			tran.setDescription(rs.getString(2));
-			tran.setInitialAccountId(rs.getInt(3));
-			tran.setEndAccountId(rs.getInt(4));
-			tran.setTimestamp(LocalDateTime.parse(rs.getString(5)));
+				Transaction tran = new Transaction();
+				tran.setId(rs.getInt(1));
+				tran.setDescription(rs.getString(2));
+				tran.setInitialAccountId(rs.getInt(3));
+				tran.setEndAccountId(rs.getInt(4));
+				tran.setTimestamp(LocalDateTime.parse(rs.getString(5)));
+				
+				trans.add(tran);
+
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();

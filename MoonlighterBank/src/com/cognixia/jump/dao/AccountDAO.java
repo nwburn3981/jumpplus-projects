@@ -16,6 +16,53 @@ public class AccountDAO {
 
 	private Connection conn = ConnectionManager.getConnection();
 
+	public ArrayList<Account> findAllAccounts() {
+
+		ArrayList<Account> accounts = new ArrayList<Account>();
+
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM accounts";
+
+		try {
+
+			prep = conn.prepareStatement(sql);
+
+			rs = prep.executeQuery();
+
+			while (rs.next()) {
+				if (rs.getRow() == 0) {
+					throw new RecordNotFoundException("No accounts found");
+				}
+
+				Account account = new Account();
+				account.setId(rs.getInt(1));
+				account.setBalance(rs.getDouble(2));
+				account.setCreated(LocalDateTime.parse(rs.getString(3)));
+				account.setAccountType(rs.getString(4));
+				account.setUserId(rs.getInt(5));
+
+				accounts.add(account);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+
+		try {
+			prep.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return accounts;
+
+	}
+
 	public ArrayList<Account> findAllAccountsByUser(int id) {
 
 		ArrayList<Account> accounts = new ArrayList<Account>();
@@ -110,9 +157,55 @@ public class AccountDAO {
 
 		return account;
 	}
-	
+
+	public Account findAccountById(int id) {
+
+		Account account = new Account();
+
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM accounts WHERE account_id = ?";
+
+		try {
+
+			prep = conn.prepareStatement(sql);
+
+			prep.setInt(1, id);
+
+			rs = prep.executeQuery();
+
+			while (rs.next()) {
+				if (rs.getRow() == 0) {
+					throw new RecordNotFoundException("No accounts found");
+				}
+
+				account.setId(rs.getInt(1));
+				account.setBalance(rs.getDouble(2));
+				account.setCreated(LocalDateTime.parse(rs.getString(3)));
+				account.setAccountType(rs.getString(4));
+				account.setUserId(rs.getInt(5));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+
+		try {
+			prep.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return account;
+	}
+
 	public boolean createAccount(Account account) {
-		
+
 		PreparedStatement prep = null;
 		int numInserts = 0;
 		String sql = "INSERT INTO accounts VALUES(?, ?, ?, ?, ?)";
@@ -142,21 +235,21 @@ public class AccountDAO {
 			e.printStackTrace();
 		}
 		return false;
-		
+
 	}
-	
+
 	public boolean updateAccountBalance(int id, double balance) {
-		
+
 		PreparedStatement prep = null;
 		int numInserts = 0;
-		String sql = "UPDATE accounts SET balance = ? WHERE account_id = ?)";
+		String sql = "UPDATE accounts SET balance = ? WHERE account_id = ?";
 
 		try {
 			prep = conn.prepareStatement(sql);
 
 			prep.setDouble(1, balance);
 			prep.setInt(2, id);
-	
+
 			numInserts = prep.executeUpdate();
 
 			if (numInserts > 0) {
@@ -173,7 +266,7 @@ public class AccountDAO {
 			e.printStackTrace();
 		}
 		return false;
-		
+
 	}
 
 }

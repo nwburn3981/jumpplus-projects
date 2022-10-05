@@ -60,34 +60,34 @@ public class UserDAO {
 
 	}
 
-	public User verifyUser(String username, String password) {
+	public User getUserById(int id) {
 
 		User user = new User();
+
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+		String sql = "SELECT * FROM users WHERE user_id = ?";
 
 		try {
 			prep = conn.prepareStatement(sql);
 
-			prep.setString(1, username);
-			prep.setString(2, password);
+			prep.setInt(1, id);
 			rs = prep.executeQuery();
 
 			while (rs.next()) {
 				if (rs.getRow() == 0) {
-					throw new RecordNotFoundException("No users found.");
+					throw new RecordNotFoundException("No users found");
 				}
-			}
 
-			user.setId(rs.getInt(1));
-			user.setName(rs.getString(2));
-			user.setUsername(rs.getString(3));
-			user.setPassword(rs.getString(4));
-			user.setCity(rs.getString(5));
-			user.setStreet(rs.getString(6));
-			user.setPhoneNumber(rs.getString(7));
+				user.setId(rs.getInt(1));
+				user.setName(rs.getString(2));
+				user.setUsername(rs.getString(3));
+				user.setPassword(rs.getString(4));
+				user.setCity(rs.getString(5));
+				user.setStreet(rs.getString(6));
+				user.setPhoneNumber(rs.getString(7));
+			}
 
 		} catch (RecordNotFoundException e) {
 			System.out.println(e);
@@ -103,6 +103,37 @@ public class UserDAO {
 		}
 
 		return user;
+
+	}
+
+	public int verifyUser(String username, String password) {
+
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		String sql = "SELECT user_id FROM users WHERE username = ? && password = ?";
+
+		try {
+			prep = conn.prepareStatement(sql);
+			prep.setString(1, username);
+			prep.setString(2, password);
+
+			rs = prep.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			prep.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 
 	public boolean createUser(User user) {

@@ -9,6 +9,7 @@ import org.fusesource.jansi.AnsiConsole;
 import com.cognixia.jump.dao.AccountDAO;
 import com.cognixia.jump.dao.TransactionDAO;
 import com.cognixia.jump.dao.UserDAO;
+import com.cognixia.jump.exception.RecordNotFoundException;
 import com.cognixia.jump.model.Account;
 import com.cognixia.jump.model.Transaction;
 import com.cognixia.jump.model.User;
@@ -26,29 +27,42 @@ public class LandingView {
 
 		AnsiConsole.systemInstall();
 
+		boolean exitStatus = false;
+
 		System.out.println(ansi().eraseScreen().fgBlue().a("**********************"));
 		System.out.println("* Moonlighter's Bank *");
 		System.out.println("**********************");
 
 		System.out.println(ansi().fgRgb(67, 144, 186));
 
-		System.out.println("1. Create New User Account" + "\n2. Login" + "\n3. Exit");
+		while (!exitStatus) {
+			if (id == 0) {
 
-		int choice = Validation.numberValidation(scan, "^[123]{1}$");
+				System.out.println("\n1. Create New User Account" + "\n2. Login" + "\n3. Exit");
 
-		System.out.println(ansi().fgRgb(67, 144, 186));
+				int choice = Validation.numberValidation(scan, "^[123]{1}$");
 
-		switch (choice) {
-		case 1:
-			newAccountView(scan);
-			break;
-		case 2:
-			System.out.println("Not implemented yet");
-			// LoginView
-			break;
-		case 3:
-			System.out.println("Thank you for using Moonlighter!");
-			break;
+				System.out.println(ansi().fgRgb(67, 144, 186));
+
+				switch (choice) {
+				case 1:
+					newAccountView(scan);
+					break;
+				case 2:
+					loginView(scan);
+					break;
+				case 3:
+					System.out.println("Thank you for using Moonlighter!");
+					exitStatus = true;
+					break;
+				}
+
+			} else {
+				System.out.println(id);
+				MainMenuView.mainMenuView(scan, id);
+				id = 0;
+			}
+
 		}
 
 	}
@@ -77,7 +91,6 @@ public class LandingView {
 
 			String username = scan.nextLine();
 			user.setUsername(username);
-
 
 			System.out.println("\nPlease enter your password: ");
 
@@ -135,8 +148,8 @@ public class LandingView {
 			System.out.print(ansi().fgRgb(67, 144, 186));
 
 			account.setBalance(balance);
-			
-			account.setUserId( (int) userDAO.getUserByName(user.getName()).getId());
+
+			account.setUserId((int) userDAO.getUserByName(user.getName()).getId());
 
 			System.out.println(account);
 			System.out.println(ansi().fgRgb(67, 144, 186).a("\nIs this information correct? (Y/N)"));
@@ -146,21 +159,44 @@ public class LandingView {
 			System.out.print(ansi().fgRgb(67, 144, 186));
 
 			if (choice.equalsIgnoreCase("y")) {
-				
+
 				accountDAO.createAccount(account);
 				confirmed = true;
-				
+
 				trans.setDescription("Initial deposit - " + balance);
-				
+
 				Account test = accountDAO.findAccountByTimestamp(account.getCreated());
 				System.out.println(test);
 				trans.setInitialAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
 				trans.setEndAccountId((int) accountDAO.findAccountByTimestamp(account.getCreated()).getId());
-				
+
 				transDAO.createTransaction(trans);
 			}
 
 		}
+	}
+
+	public static void loginView(Scanner scan) {
+
+		System.out.println("\nPlease enter your username: ");
+
+		String username = scan.nextLine();
+
+		System.out.println("\nPlease enter your password: ");
+
+		String password = scan.nextLine();
+
+		try {
+
+			id = userDAO.verifyUser(username, password);
+
+			if (id == 0) {
+				throw new RecordNotFoundException("Wrong credentials");
+			}
+		} catch (RecordNotFoundException e) {
+			System.out.println(e);
+		}
+
 	}
 
 }
